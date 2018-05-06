@@ -10,7 +10,7 @@ export class Routes {
     PathsMapping = require('@BASELIB/js_paths_mapping').PathsMapping;
     this._initHandlers();
 
-    app.route("/api/part/:id").get( async (req: Request, res: Response, next: NextFunction ) => {
+    app.route("/api/parts/:id").get( async (req: Request, res: Response, next: NextFunction ) => {
       if( req.params.id ){
         res.json( await this.partsHandler.getPart( req.params.id ) );
       } else{
@@ -18,7 +18,7 @@ export class Routes {
       }
     } );
 
-    app.route("/api/parts-q").get( async (req: Request, res: Response, next: NextFunction ) => {
+    app.route("/api/parts/query").get( async (req: Request, res: Response, next: NextFunction ) => {
       res.json( await this.partsHandler.getPart( req.query.part_id ) );
     } );
 
@@ -30,8 +30,16 @@ export class Routes {
       res.json( await this.partsHandler.getRecentParts() );
     } );
 
-    app.route("/api/parts/update/:id").post( async (req: Request, res: Response, next: NextFunction ) =>{
+    app.route("/api/parts/update/:id").post( async (req: Request, res: Response, next: NextFunction ) => {
       res.json( await this.partsHandler.updatePart( req.params.id, req.body) );
+    });
+
+    app.route("/api/parts/create").post( async (req: Request, res: Response, next: NextFunction ) => {
+      res.json( await this.partsHandler.createPart( req.body) );
+    });
+
+    app.route("/api/parts/part-mold/:id").get( async (req: Request, res: Response, next: NextFunction ) => {
+      res.json( await this.partsHandler.getPartMold( req.body) );
     });
 
   }

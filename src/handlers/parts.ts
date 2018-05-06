@@ -33,4 +33,23 @@ export class PartsHandler{
       { where: { createdDate: {[Op.gte]: new Date(new Date().getTime() - 42 * 60 * 60 * 1000)}}});
   }
 
+  async createPart(part: any): Promise<any>{
+    return await Part.create({ 
+      part_id: part.part_id, 
+      description: part.description,
+      category: part.category,
+      material: part.material,
+      mold_id: part.mold_id,
+      weight_grams: part.weight_grams,
+      image: part.image,
+      documents: part.documents,
+      sub_parts: part.sub_parts,
+      workflow_id: part.workflow_id
+    });
+  }
+
+  async getPartMold(partId: string): Promise<any>{
+    return await Part.scope('mold').findById(partId);
+  }
+
 }
