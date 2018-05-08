@@ -10,6 +10,10 @@ export class Routes {
     PathsMapping = require('@BASELIB/js_paths_mapping').PathsMapping;
     this._initHandlers();
 
+    app.route("/api/parts/created-recently").get( async (req: Request, res: Response, next: NextFunction ) => {
+      res.json( await this.partsHandler.getRecentParts() );
+    } );
+
     app.route("/api/parts/:id").get( async (req: Request, res: Response, next: NextFunction ) => {
       if( req.params.id ){
         res.json( await this.partsHandler.getPart( req.params.id ) );
@@ -24,10 +28,6 @@ export class Routes {
 
     app.route("/api/parts").get( async (req: Request, res: Response, next: NextFunction ) => {
       res.json( await this.partsHandler.getParts() );
-    } );
-
-    app.route("/api/parts/created-recently").get( async (req: Request, res: Response, next: NextFunction ) => {
-      res.json( await this.partsHandler.getRecentParts() );
     } );
 
     app.route("/api/parts/update/:id").post( async (req: Request, res: Response, next: NextFunction ) => {
